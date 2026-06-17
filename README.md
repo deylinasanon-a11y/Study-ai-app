@@ -18,6 +18,8 @@ study-ai-app/
 ├── src/
 │   ├── App.jsx          # Main React component
 │   └── ...
+├── api/
+│   └── analyze.js       # API endpoint for Claude analysis
 ├── README.md            # This file
 └── ...
 ```
@@ -28,6 +30,7 @@ study-ai-app/
 - **Claude API (Anthropic)** - AI analysis and content generation
 - **JavaScript (ES6+)** - Core language
 - **CSS-in-JS** - Inline styling
+- **Vercel** - Deployment platform
 
 ## Getting Started
 
@@ -50,11 +53,14 @@ npm install
 
 ### Setup
 
-1. Create a `.env` file in the root directory
+1. Create a `.env.local` file in the root directory (for local development)
 2. Add your Anthropic API key:
    ```
    REACT_APP_ANTHROPIC_API_KEY=your_api_key_here
    ```
+
+3. For Vercel deployment:
+   - Add `ANTHROPIC_API_KEY` environment variable in Vercel dashboard (Settings → Environment Variables)
 
 ### Running the App
 
@@ -71,7 +77,7 @@ npm start
 2. **Click "Build My Study Plan"** - AI analyzes your material
 3. **Explore Tabs**:
    - 📚 **Overview** - Read key concepts
-   - ��️ **Plan** - See your personalized study schedule
+   - 📋 **Plan** - See your personalized study schedule
    - 🃏 **Flashcards** - Quiz yourself and track progress
    - 🎥 **Videos** - Get recommendations for related videos
 
@@ -81,14 +87,15 @@ npm start
 
 The app uses the Anthropic Claude API to:
 - Analyze study material
-- Generate key points
-- Create flashcard questions and answers
-- Build personalized study plans
-- Suggest YouTube search queries
+- Generate key points (5 key concepts)
+- Create flashcard questions and answers (5 flashcards)
+- Build personalized study plans (today, tomorrow, day after, next week)
+- Suggest YouTube and image search queries
 
-**Endpoint**: `https://api.anthropic.com/v1/messages`
-**Model**: `claude-sonnet-4-6`
-**Max Tokens**: 1000
+**Endpoint**: `https://api.anthropic.com/v1/messages`  
+**Model**: `claude-sonnet-4-6`  
+**Max Tokens**: 2000  
+**Input Limit**: 3000 characters (automatically truncated to prevent token overflow)
 
 ## Features in Development
 
@@ -118,7 +125,7 @@ MIT License - see LICENSE file for details
 
 For questions or issues:
 - Open an issue on GitHub
-- Contact: [your-email@example.com]
+- Contact: deylinasanon@gmail.com
 
 ---
 
