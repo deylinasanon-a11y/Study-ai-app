@@ -26,7 +26,7 @@ export default async function handler(req, res) {
   "imageQuery": "visual concept from this topic for image search"
 }
 
-Material: ${text}`;
+Material: ${text.slice(0, 3000)}`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -38,13 +38,20 @@ Material: ${text}`;
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
-        max_tokens: 1000,
+        max_tokens: 2000,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return res.status(response.status).json({ error: errorData.error || 'API request failed' });
+    }
+
     const data = await response.json();
     res.status(200).json(data);
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error:', err);
+    res.status(500).json({ error: err.message || 'Internal server error' });
   }
 }
